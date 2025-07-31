@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { MainCategory, Category } from '../types';
 import { iconMap } from './icons';
 import { getColorClasses, getHexColorStyles } from '../utils/colorMapping';
@@ -14,8 +14,20 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
   onSubCategorySelect,
   onBack,
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
   const IconComponent = iconMap[category.icon as keyof typeof iconMap];
   const colorClasses = getColorClasses(category.color);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   return (
     <div className="h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-2 md:py-6 flex flex-col">
@@ -60,7 +72,12 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
         </div>
 
         {/* Subcategory Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 lg:gap-8 max-w-6xl mx-auto flex-1 auto-rows-fr">
+        <div 
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 lg:gap-8 max-w-6xl mx-auto flex-1"
+          style={{ 
+            gridAutoRows: isMobile ? 'minmax(120px, 140px)' : 'minmax(180px, 200px)' 
+          }}
+        >
           {category.categories.map((subCategory, index) => {
             // Use subcategory's own icon and color if available, otherwise fall back to main category
             const subCategoryIcon = subCategory.icon || category.icon;
