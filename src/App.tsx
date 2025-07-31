@@ -1,35 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { CategoryGrid } from './components/CategoryGrid';
+import { SubCategoryList } from './components/SubCategoryList';
+import { TrackList } from './components/TrackList';
+import { Breadcrumb } from './components/Breadcrumb';
+import { useNavigation } from './hooks/useNavigation';
+import { musicData } from './data/musicData';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {
+    navigationState,
+    navigateToCategory,
+    navigateToSubCategory,
+    navigateBack,
+    navigateToHome,
+  } = useNavigation();
+
+  const handleBreadcrumbNavigate = (index: number) => {
+    if (index === 0) {
+      navigateToHome();
+    } else if (index === 1 && navigationState.level === 'tracks') {
+      navigateBack();
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-neutral-50">
+      {/* Breadcrumb Navigation */}
+      {navigationState.level !== 'main' && (
+        <div className="bg-white border-b border-neutral-200 px-4 py-3 sticky top-0 z-10">
+          <div className="max-w-4xl mx-auto">
+            <Breadcrumb 
+              items={navigationState.breadcrumb} 
+              onNavigate={handleBreadcrumbNavigate}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Main Content with Sliding Animation */}
+      <div className="relative overflow-hidden">
+        <div 
+          className={`
+            transition-transform duration-500 ease-out flex
+            ${navigationState.level === 'main' ? 'translate-x-0' : ''}
+            ${navigationState.level === 'category' ? '-translate-x-full' : ''}
+            ${navigationState.level === 'tracks' ? '-translate-x-[200%]' : ''}
+          `}
+          style={{ width: '300%' }}
+        >
+          {/* Main Categories View */}
+          <div className="w-1/3 flex-shrink-0">
+            <CategoryGrid
+              categories={musicData.categories}
+              onCategorySelect={navigateToCategory}
+            />
+          </div>
+
+          {/* Subcategories View */}
+          <div className="w-1/3 flex-shrink-0">
+            {navigationState.currentCategory && (
+              <SubCategoryList
+                category={navigationState.currentCategory}
+                onSubCategorySelect={navigateToSubCategory}
+                onBack={navigateBack}
+              />
+            )}
+          </div>
+
+          {/* Tracks View */}
+          <div className="w-1/3 flex-shrink-0">
+            {navigationState.currentCategory && navigationState.currentSubCategory && (
+              <TrackList
+                category={navigationState.currentCategory}
+                subCategory={navigationState.currentSubCategory}
+                onBack={navigateBack}
+              />
+            )}
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
