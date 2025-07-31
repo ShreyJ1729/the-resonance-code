@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import type { Category, Track, MainCategory } from '../types';
 import { iconMap } from './icons';
 import { getColorClasses } from '../utils/colorMapping';
@@ -16,7 +16,6 @@ export const TrackList: React.FC<TrackListProps> = ({
 }) => {
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(false);
   const [loopMode, setLoopMode] = useState<'single' | 'playlist'>('playlist');
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const IconComponent = iconMap[(subCategory.icon || category.icon) as keyof typeof iconMap];
@@ -28,34 +27,16 @@ export const TrackList: React.FC<TrackListProps> = ({
     return match ? match[1] : null;
   };
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (isAutoPlaying && selectedTrack && loopMode === 'playlist') {
-      const videoId = getYouTubeVideoId(selectedTrack.url);
-      if (videoId && iframeRef.current) {
-        // YouTube embedded player will auto-advance, but we need to handle the next track
-        const handleVideoEnd = () => {
-          const nextIndex = (currentTrackIndex + 1) % subCategory.tracks.length;
-          setCurrentTrackIndex(nextIndex);
-          setSelectedTrack(subCategory.tracks[nextIndex]);
-        };
-
-        // Listen for when the video ends (approximate timing)
-        const timer = setTimeout(handleVideoEnd, 300000); // 5 minutes default, adjust as needed
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [selectedTrack, currentTrackIndex, isAutoPlaying, loopMode, subCategory.tracks]);
+  // Note: Removed automatic track advancement to prevent premature switching
+  // Users can manually navigate with previous/next buttons for better control
 
   const handleTrackSelect = (track: Track, index: number) => {
     const wasSelected = selectedTrack?.url === track.url;
     if (wasSelected) {
       setSelectedTrack(null);
-      setIsAutoPlaying(false);
     } else {
       setSelectedTrack(track);
       setCurrentTrackIndex(index);
-      setIsAutoPlaying(true);
     }
   };
 
@@ -126,7 +107,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                     {selectedTrack.title}
                   </p>
                   <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
-                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • {loopMode === 'single' ? 'Single track loop' : 'Playlist loop'}
+                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • {loopMode === 'single' ? 'Single track loop' : 'Manual playlist control'}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -137,7 +118,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                         ? `${colorClasses.bgLight} ${colorClasses.text}` 
                         : 'text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
                     }`}
-                    title={loopMode === 'single' ? 'Switch to playlist loop' : 'Switch to single track loop'}
+                    title={loopMode === 'single' ? 'Switch to manual playlist mode' : 'Switch to single track loop'}
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                       {loopMode === 'single' ? (
