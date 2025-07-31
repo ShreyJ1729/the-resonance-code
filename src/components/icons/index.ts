@@ -1,4 +1,4 @@
-// Import all icons first
+// Import custom icons
 import { WaveIcon } from './WaveIcon';
 import { HeadphonesIcon } from './HeadphonesIcon';
 import { MusicIcon } from './MusicIcon';
@@ -12,11 +12,33 @@ import { CrystalIcon } from './CrystalIcon';
 import { LotusIcon } from './LotusIcon';
 import { MeditationIcon } from './MeditationIcon';
 
+// Import Lucide React icons
+import { 
+  Shield, 
+  Unlock, 
+  RefreshCw, 
+  Dna, 
+  Heart, 
+  Droplets, 
+  Eye, 
+  Sun, 
+  Moon, 
+  Target, 
+  Brain, 
+  Zap, 
+  Music, 
+  Bed, 
+  Coins, 
+  ShieldCheck, 
+  Leaf 
+} from 'lucide-react';
+
 // Export icons individually
 export { WaveIcon, HeadphonesIcon, MusicIcon, SparklesIcon, HeartPulseIcon, BrainIcon, OmIcon, SoundWavesIcon, TuningForkIcon, CrystalIcon, LotusIcon, MeditationIcon };
 
 // Icon mapping for easy access
 export const iconMap = {
+  // Custom icons
   wave: WaveIcon,
   headphones: HeadphonesIcon,
   music: MusicIcon,
@@ -29,6 +51,23 @@ export const iconMap = {
   crystal: CrystalIcon,
   lotus: LotusIcon,
   meditation: MeditationIcon,
+  
+  // Lucide React icons
+  shield: Shield,
+  unlock: Unlock,
+  'refresh-cw': RefreshCw,
+  dna: Dna,
+  heart: Heart,
+  droplets: Droplets,
+  eye: Eye,
+  sun: Sun,
+  moon: Moon,
+  target: Target,
+  zap: Zap,
+  bed: Bed,
+  coins: Coins,
+  'shield-check': ShieldCheck,
+  leaf: Leaf,
 } as const;
 
 export type IconType = keyof typeof iconMap;

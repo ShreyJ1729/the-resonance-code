@@ -6,6 +6,8 @@ export interface Track {
 
 export interface Category {
   name: string;
+  icon?: string;
+  color?: string;
   tracks: Track[];
 }
 

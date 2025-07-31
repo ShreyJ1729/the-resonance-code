@@ -18,6 +18,8 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Pain Reduction",
+          icon: "shield",
+          color: "#E74C3C",
           tracks: createTracks(
             [
               "174 Foundation",
@@ -37,6 +39,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Liberating Guilt and Fear",
+          icon: "unlock",
+          color: "#9B59B6",
           tracks: createTracks(
             [
               "396 Let Go of Fear & Guilt",
@@ -56,6 +60,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Undoing Situations and Facilitating Change",
+          icon: "refresh-cw",
+          color: "#F39C12",
           tracks: createTracks(
             [
               "417 Facilitate Change",
@@ -75,6 +81,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Transformation and Miracles (DNA Repair)",
+          icon: "dna",
+          color: "#27AE60",
           tracks: createTracks(
             [
               "528 Release Inner Conflict & Struggle",
@@ -94,6 +102,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Connecting Relationships",
+          icon: "heart",
+          color: "#E91E63",
           tracks: createTracks(
             [
               "639 Attract Love & Raise Positive Energy",
@@ -113,6 +123,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Full Body Detox",
+          icon: "droplets",
+          color: "#3498DB",
           tracks: createTracks(
             [
               "741 Spiritual Detox",
@@ -132,6 +144,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Returning to Spiritual Order",
+          icon: "eye",
+          color: "#6A5ACD",
           tracks: createTracks(
             [
               "852 Awake Intuition",
@@ -151,6 +165,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Returning to Oneness",
+          icon: "sun",
+          color: "#FFD700",
           tracks: createTracks(
             [
               "963 Open Third Eye",
@@ -177,6 +193,8 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Sleep (Delta Waves)",
+          icon: "moon",
+          color: "#2C3E50",
           tracks: createTracks(
             [
               "3.2 Healing Sleep",
@@ -196,6 +214,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Meditation (Theta Waves)",
+          icon: "lotus",
+          color: "#8E44AD",
           tracks: createTracks(
             [
               "7 Meditation & Inner Peace",
@@ -215,6 +235,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Focus (Alpha Waves)",
+          icon: "target",
+          color: "#E67E22",
           tracks: createTracks(
             [
               "12.5 Focus",
@@ -234,6 +256,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Concentration (Beta Waves)",
+          icon: "brain",
+          color: "#34495E",
           tracks: createTracks(
             [
               "13 Concentration",
@@ -253,6 +277,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Peak Awareness (Gamma Waves)",
+          icon: "zap",
+          color: "#F1C40F",
           tracks: createTracks(
             [
               "40 Memory Recall",
@@ -272,6 +298,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Focus Music",
+          icon: "music",
+          color: "#16A085",
           tracks: createTracks(
             [
               "40 Binaural Beats",
@@ -302,12 +330,14 @@ export const musicData: MusicData = {
       ],
     },
     {
-      name: "432 Collections",
+      name: "432 Hz Collections",
       icon: "music",
       color: "amber",
       categories: [
         {
           name: "Deep Sleep",
+          icon: "bed",
+          color: "#2980B9",
           tracks: createTracks(
             [
               "432 Sleep Music",
@@ -337,6 +367,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Deep Healing",
+          icon: "heart-pulse",
+          color: "#2ECC71",
           tracks: createTracks(
             [
               "432 Miracle Sleep Tone",
@@ -377,6 +409,8 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Attract Positivity",
+          icon: "sparkles",
+          color: "#F39C12",
           tracks: createTracks(
             [
               "777 Manifest Positivity & Self-Confidence",
@@ -396,6 +430,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Abundance Gate",
+          icon: "coins",
+          color: "#D4AF37",
           tracks: createTracks(
             [
               "888 Abundance Gate",
@@ -422,6 +458,8 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Anxiety Relief",
+          icon: "shield-check",
+          color: "#1ABC9C",
           tracks: createTracks(
             [
               "In This Moment, I Am",
@@ -458,6 +496,8 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Meditation Music",
+          icon: "om",
+          color: "#E74C3C",
           tracks: createTracks(
             [
               "528 Love & Miracles",
@@ -487,6 +527,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Mindfulness",
+          icon: "leaf",
+          color: "#27AE60",
           tracks: createTracks(
             [
               "417 New Beginnings",
@@ -516,6 +558,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Heart Chakra Healing",
+          icon: "heart",
+          color: "#E91E63",
           tracks: createTracks(
             [
               "639 Manifest Love & Miracles",

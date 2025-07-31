@@ -1,3 +1,28 @@
+// Utility to convert hex color to RGB values for inline styles
+const hexToRgb = (hex: string) => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+};
+
+// Utility to get inline styles for hex colors
+export const getHexColorStyles = (hexColor: string) => {
+  const rgb = hexToRgb(hexColor);
+  if (!rgb) return null;
+  
+  return {
+    bgColor: hexColor,
+    bgColorLight: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.1)`,
+    bgColorHover: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`,
+    textColor: hexColor,
+    borderColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`,
+    ringColor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`
+  };
+};
+
 // Utility to map data colors to proper Tailwind CSS classes
 export const getColorClasses = (colorKey: string) => {
   const colorMap: Record<string, {
