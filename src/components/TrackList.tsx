@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import type { Category, Track, MainCategory } from '../types';
 import { iconMap } from './icons';
 import { getColorClasses } from '../utils/colorMapping';
@@ -15,6 +15,9 @@ export const TrackList: React.FC<TrackListProps> = ({
   onBack,
 }) => {
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const IconComponent = iconMap[category.icon as keyof typeof iconMap];
   const colorClasses = getColorClasses(category.color);
 
@@ -24,8 +27,47 @@ export const TrackList: React.FC<TrackListProps> = ({
     return match ? match[1] : null;
   };
 
-  const handleTrackSelect = (track: Track) => {
-    setSelectedTrack(selectedTrack?.url === track.url ? null : track);
+  // Auto-play functionality
+  useEffect(() => {
+    if (isAutoPlaying && selectedTrack) {
+      const videoId = getYouTubeVideoId(selectedTrack.url);
+      if (videoId && iframeRef.current) {
+        // YouTube embedded player will auto-advance, but we need to handle the next track
+        const handleVideoEnd = () => {
+          const nextIndex = (currentTrackIndex + 1) % subCategory.tracks.length;
+          setCurrentTrackIndex(nextIndex);
+          setSelectedTrack(subCategory.tracks[nextIndex]);
+        };
+
+        // Listen for when the video ends (approximate timing)
+        const timer = setTimeout(handleVideoEnd, 300000); // 5 minutes default, adjust as needed
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [selectedTrack, currentTrackIndex, isAutoPlaying, subCategory.tracks]);
+
+  const handleTrackSelect = (track: Track, index: number) => {
+    const wasSelected = selectedTrack?.url === track.url;
+    if (wasSelected) {
+      setSelectedTrack(null);
+      setIsAutoPlaying(false);
+    } else {
+      setSelectedTrack(track);
+      setCurrentTrackIndex(index);
+      setIsAutoPlaying(true);
+    }
+  };
+
+  const handleNextTrack = () => {
+    const nextIndex = (currentTrackIndex + 1) % subCategory.tracks.length;
+    setCurrentTrackIndex(nextIndex);
+    setSelectedTrack(subCategory.tracks[nextIndex]);
+  };
+
+  const handlePrevTrack = () => {
+    const prevIndex = currentTrackIndex === 0 ? subCategory.tracks.length - 1 : currentTrackIndex - 1;
+    setCurrentTrackIndex(prevIndex);
+    setSelectedTrack(subCategory.tracks[prevIndex]);
   };
 
   return (
@@ -72,19 +114,47 @@ export const TrackList: React.FC<TrackListProps> = ({
 
         {/* YouTube Player */}
         {selectedTrack && (
-          <div className="mb-8 bg-white rounded-2xl shadow-card overflow-hidden">
-            <div className="p-6 border-b border-neutral-100">
-              <h3 className="text-lg font-medium text-neutral-800 mb-2">
-                Now Playing
-              </h3>
-              <p className="text-neutral-600">
-                {selectedTrack.title}
-              </p>
+          <div className="mb-8 bg-white dark:bg-neutral-800 rounded-2xl shadow-card overflow-hidden">
+            <div className="p-6 border-b border-neutral-100 dark:border-neutral-700">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-medium text-neutral-800 dark:text-neutral-200 mb-2">
+                    Now Playing
+                  </h3>
+                  <p className="text-neutral-600 dark:text-neutral-400">
+                    {selectedTrack.title}
+                  </p>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
+                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • Auto-loop enabled
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={handlePrevTrack}
+                    className="p-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
+                    title="Previous Track"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M15 4l-8 6 8 6V4zM6 4h2v12H6V4z" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleNextTrack}
+                    className="p-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
+                    title="Next Track"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M5 4v12l8-6-8-6zM12 4h2v12h-2V4z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
             <div className="aspect-video">
               {getYouTubeVideoId(selectedTrack.url) ? (
                 <iframe
-                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(selectedTrack.url)}?autoplay=1&rel=0`}
+                  ref={iframeRef}
+                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(selectedTrack.url)}?autoplay=1&rel=0&loop=1&playlist=${getYouTubeVideoId(selectedTrack.url)}`}
                   title={selectedTrack.title}
                   className="w-full h-full"
                   frameBorder="0"
@@ -92,8 +162,8 @@ export const TrackList: React.FC<TrackListProps> = ({
                   allowFullScreen
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-neutral-100">
-                  <p className="text-neutral-500">Invalid video URL</p>
+                <div className="w-full h-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-700">
+                  <p className="text-neutral-500 dark:text-neutral-400">Invalid video URL</p>
                 </div>
               )}
             </div>
@@ -108,11 +178,11 @@ export const TrackList: React.FC<TrackListProps> = ({
             return (
               <button
                 key={`${track.title}-${index}`}
-                onClick={() => handleTrackSelect(track)}
-                className={`w-full text-left bg-white rounded-xl transition-all duration-300 p-3 sm:p-4 border focus:outline-none focus:ring-2 focus:ring-offset-2 group ${
+                onClick={() => handleTrackSelect(track, index)}
+                className={`w-full text-left bg-white dark:bg-neutral-800 rounded-xl transition-all duration-300 p-3 sm:p-4 border focus:outline-none focus:ring-2 focus:ring-offset-2 group ${
                   isSelected 
                     ? `${colorClasses.border} shadow-card-hover ring-2 ${colorClasses.ring}` 
-                    : 'border-neutral-100 hover:border-neutral-200 shadow-card hover:shadow-card-hover'
+                    : 'border-neutral-100 dark:border-neutral-700 hover:border-neutral-200 dark:hover:border-neutral-600 shadow-card hover:shadow-card-hover'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -138,7 +208,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                     {/* Track Info */}
                     <div className="flex-1 min-w-0">
                       <h4 className={`text-sm sm:text-base font-medium truncate transition-colors ${
-                        isSelected ? colorClasses.text : 'text-neutral-800'
+                        isSelected ? colorClasses.text : 'text-neutral-800 dark:text-neutral-200'
                       }`}>
                         {track.title}
                       </h4>
@@ -157,18 +227,6 @@ export const TrackList: React.FC<TrackListProps> = ({
           })}
         </div>
 
-        {/* Instructions */}
-        <div className="mt-12 text-center">
-          <div className="bg-white rounded-xl p-6 shadow-card">
-            <h3 className="text-lg font-medium text-neutral-800 mb-3">
-              How to Use
-            </h3>
-            <p className="text-neutral-600 text-sm leading-relaxed">
-              Click on any track to start playing. Use headphones for the best binaural beats experience. 
-              Find a comfortable position and allow the frequencies to guide your healing journey.
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
