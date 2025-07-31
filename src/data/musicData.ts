@@ -19,7 +19,7 @@ export const musicData: MusicData = {
         {
           name: "174 Hz - Pain Reduction",
           icon: "shield",
-          color: "#E74C3C",
+          color: "#8B4513",
           tracks: createTracks(
             [
               "174 Foundation",
@@ -40,7 +40,7 @@ export const musicData: MusicData = {
         {
           name: "396 Hz - Liberating Guilt and Fear",
           icon: "unlock",
-          color: "#9B59B6",
+          color: "#DC143C",
           tracks: createTracks(
             [
               "396 Let Go of Fear & Guilt",
