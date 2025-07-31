@@ -19,8 +19,8 @@ export const TrackList: React.FC<TrackListProps> = ({
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(false);
   const [loopMode, setLoopMode] = useState<'single' | 'playlist'>('playlist');
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const IconComponent = iconMap[category.icon as keyof typeof iconMap];
-  const colorClasses = getColorClasses(category.color);
+  const IconComponent = iconMap[(subCategory.icon || category.icon) as keyof typeof iconMap];
+  const colorClasses = getColorClasses(subCategory.color || category.color);
 
   // Extract YouTube video ID from URL
   const getYouTubeVideoId = (url: string): string | null => {
