@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { Category, Track, MainCategory } from '../types';
 import { iconMap } from './icons';
-import { getColorClasses } from '../utils/colorMapping';
+import { getColorClasses, getHexColorStyles } from '../utils/colorMapping';
 
 // YouTube API types
 declare global {
@@ -43,7 +43,10 @@ export const TrackList: React.FC<TrackListProps> = ({
   const [wakeLockSupported, setWakeLockSupported] = useState<boolean>(false);
   const playerRef = useRef<HTMLDivElement>(null);
   const IconComponent = iconMap[(subCategory.icon || category.icon) as keyof typeof iconMap];
-  const colorClasses = getColorClasses(subCategory.color || category.color);
+  const subCategoryColor = subCategory.color || category.color;
+  const isHexColor = subCategoryColor.startsWith('#');
+  const colorClasses = isHexColor ? getColorClasses(category.color) : getColorClasses(subCategoryColor);
+  const hexStyles = isHexColor ? getHexColorStyles(subCategoryColor) : null;
 
   // Extract YouTube video ID from URL
   const getYouTubeVideoId = (url: string): string | null => {
@@ -217,7 +220,8 @@ export const TrackList: React.FC<TrackListProps> = ({
             {IconComponent && (
               <IconComponent 
                 size={32} 
-                className={colorClasses.text}
+                className={hexStyles ? '' : colorClasses.text}
+                style={hexStyles ? { color: hexStyles.textColor } : undefined}
               />
             )}
           </div>
