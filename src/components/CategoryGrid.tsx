@@ -46,13 +46,13 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
               >
                 {IconComponent && (
                   <IconComponent
-                    size={60}
-                    className={`${colorClasses.text} transition-colors duration-300 w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 md:mb-2`}
+                    size={80}
+                    className={`${colorClasses.text} transition-colors duration-300 w-20 h-20 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-4 md:mb-2`}
                   />
                 )}
 
                 {/* Category Name */}
-                <h3 className="text-sm md:text-sm lg:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight px-1">
+                <h3 className="text-base font-semibold md:text-sm lg:text-base text-neutral-800 dark:text-neutral-200 text-center leading-tight px-2">
                   {category.name}
                 </h3>
               </button>

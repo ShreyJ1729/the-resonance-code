@@ -42,8 +42,8 @@ function App() {
       
       {/* Breadcrumb Navigation */}
       {navigationState.level !== "main" && (
-        <div className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 px-4 py-2 sticky top-0 z-10">
-          <div className="max-w-4xl mx-auto">
+        <div className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 px-4 py-3 sticky top-0 z-10">
+          <div className="max-w-4xl mx-auto flex items-center">
             <Breadcrumb
               items={navigationState.breadcrumb}
               onNavigate={handleBreadcrumbNavigate}

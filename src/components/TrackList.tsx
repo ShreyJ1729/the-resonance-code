@@ -124,7 +124,7 @@ export const TrackList: React.FC<TrackListProps> = ({
         <div className="flex items-center mb-8">
           <button
             onClick={onBack}
-            className="flex items-center text-neutral-600 hover:text-neutral-800 transition-colors mr-4"
+            className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors mr-4"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path 

@@ -84,14 +84,16 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
               >
                 {SubCategoryIconComponent && (
                   <SubCategoryIconComponent 
-                    size={32} 
-                    className={`transition-colors duration-300 w-8 h-8 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-2 md:mb-3`}
+                    size={48} 
+                    className={`transition-colors duration-300 w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 md:mb-3 ${
+                      hexStyles ? '' : subColorClasses.text
+                    }`}
                     style={hexStyles ? { color: hexStyles.textColor } : undefined}
                   />
                 )}
                 
                 {/* Subcategory Name */}
-                <h3 className="text-xs leading-tight md:text-sm lg:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center px-1">
+                <h3 className="text-sm leading-tight font-semibold md:text-sm lg:text-base text-neutral-800 dark:text-neutral-200 text-center px-1">
                   {subCategory.name}
                 </h3>
               </button>

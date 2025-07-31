@@ -72,6 +72,32 @@ The current UI feels too "web-appy", casual, and cutesy for the sacred nature of
 - Reduce jarring visual changes
 - Create sense of reverence in interactions
 
+## 🎵 Track Queue System
+
+### Multi-Track Selection & Custom Playlist
+- **Track Selection Interface**: Add checkboxes or selection indicators to track buttons
+- **Queue Management**: Users can select multiple tracks from different categories/subcategories
+- **Custom Order**: Drag & drop functionality to reorder selected tracks in desired sequence
+- **Queue Display**: Sidebar or overlay showing current queue with track names and order
+- **Queue Controls**: 
+  - Add/remove tracks from queue
+  - Clear entire queue
+  - Reorder tracks within queue
+  - Save queue as custom playlist (optional)
+
+### Queue Playback Features
+- **Sequential Playback**: Automatically advance through queued tracks in order
+- **Queue Progress**: Visual indicator showing current position in queue
+- **Skip Controls**: Previous/Next buttons navigate through queue, not just single subcategory
+- **Queue Repeat**: Option to loop entire custom queue
+- **Mix Categories**: Allow tracks from different healing frequency categories in one session
+
+### Implementation Considerations
+- **Cross-Navigation**: Queue persists when navigating between categories
+- **Session Management**: Queue survives page refreshes (localStorage)
+- **Mobile Optimization**: Queue interface works well on small screens
+- **Healing Focus**: Queue functionality enhances rather than disrupts meditative experience
+
 ---
 
 *Note: The goal is to transform the app from feeling like a casual music player into a sacred healing instrument that honors the ancient wisdom and powerful healing potential of sound frequencies.*
