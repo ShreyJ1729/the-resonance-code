@@ -36,25 +36,25 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
         </div>
 
         {/* Subcategory Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
           {category.categories.map((subCategory, index) => (
             <button
               key={`${subCategory.name}-${index}`}
               onClick={() => onSubCategorySelect(subCategory)}
-              className={`group relative bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 p-6 sm:p-8 text-center min-h-[200px] sm:min-h-[240px] flex flex-col items-center justify-center border border-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring}`}
+              className={`group relative bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 p-3 sm:p-4 text-center min-h-[120px] sm:min-h-[140px] flex flex-col items-center justify-center border border-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring}`}
             >
               {/* Icon Container */}
-              <div className={`w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 rounded-full ${colorClasses.bgLight} flex items-center justify-center transition-all duration-300 group-hover:${colorClasses.bgHover} group-hover:scale-110`}>
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 mb-2 sm:mb-3 rounded-full ${colorClasses.bgLight} flex items-center justify-center transition-all duration-300 group-hover:${colorClasses.bgHover} group-hover:scale-110`}>
                 {IconComponent && (
                   <IconComponent 
                     size={24} 
-                    className={`${colorClasses.text} transition-colors duration-300 sm:w-8 sm:h-8`}
+                    className={`${colorClasses.text} transition-colors duration-300 sm:w-10 sm:h-10`}
                   />
                 )}
               </div>
 
               {/* Subcategory Name */}
-              <h3 className="text-base sm:text-lg font-medium text-neutral-800 leading-tight px-2">
+              <h3 className="text-xs sm:text-sm font-medium text-neutral-800 leading-tight px-1">
                 {subCategory.name}
               </h3>
 

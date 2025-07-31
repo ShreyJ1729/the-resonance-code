@@ -49,7 +49,7 @@ function App() {
       <div className="relative overflow-hidden">
         <div
           className={`
-            transition-transform duration-500 ease-out flex
+            transition-transform duration-200 ease-out flex
             ${navigationState.level === "main" ? "translate-x-0" : ""}
             ${navigationState.level === "category" ? "-translate-x-1/3" : ""}
             ${navigationState.level === "tracks" ? "-translate-x-2/3" : ""}
