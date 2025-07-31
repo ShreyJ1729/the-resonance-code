@@ -18,10 +18,10 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
   const colorClasses = getColorClasses(category.color);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-6">
-      <div className="max-w-4xl mx-auto">
+    <div className="h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-2 md:py-6 flex flex-col">
+      <div className="max-w-4xl mx-auto flex flex-col h-full">
         {/* Back Button */}
-        <div className="flex items-center mb-6">
+        <div className="flex items-center mb-2 md:mb-6 flex-shrink-0">
           <button
             onClick={onBack}
             className="flex items-center text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors"
@@ -40,27 +40,27 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
         </div>
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className={`w-12 h-12 mx-auto mb-3 rounded-full ${colorClasses.bgLight} flex items-center justify-center`}>
+        <div className="text-center mb-3 md:mb-8 flex-shrink-0">
+          <div className={`w-8 h-8 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 rounded-full ${colorClasses.bgLight} flex items-center justify-center`}>
             {IconComponent && (
               <IconComponent 
-                size={24} 
-                className={colorClasses.text}
+                size={16}
+                className={`${colorClasses.text} md:w-6 md:h-6`}
               />
             )}
           </div>
-          <h1 className="text-2xl font-light text-neutral-800 dark:text-neutral-200">
+          <h1 className="text-lg md:text-2xl font-light text-neutral-800 dark:text-neutral-200">
             {category.name}
           </h1>
           {category.name === "Binaural Beats" && (
-            <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-2 italic">
+            <p className="text-xs md:text-sm text-neutral-600 dark:text-neutral-400 mt-1 md:mt-2 italic">
               Binaural beats require headphones to be effective
             </p>
           )}
         </div>
 
         {/* Subcategory Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 lg:gap-8 max-w-6xl mx-auto flex-1 auto-rows-fr">
           {category.categories.map((subCategory, index) => {
             // Use subcategory's own icon and color if available, otherwise fall back to main category
             const subCategoryIcon = subCategory.icon || category.icon;
@@ -76,7 +76,7 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
               <button
                 key={`${subCategory.name}-${index}`}
                 onClick={() => onSubCategorySelect(subCategory)}
-                className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-full h-40 sm:h-44 lg:h-48 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${subColorClasses.border} ${subColorClasses.ring} p-4`}
+                className={`group relative bg-white dark:bg-neutral-800 rounded-lg md:rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-full h-full flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${subColorClasses.border} ${subColorClasses.ring} p-1 md:p-4`}
                 style={hexStyles ? {
                   '--hover-bg': hexStyles.bgColorLight,
                   '--ring-color': hexStyles.ringColor,
@@ -84,14 +84,14 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
               >
                 {SubCategoryIconComponent && (
                   <SubCategoryIconComponent 
-                    size={80} 
-                    className={`transition-colors duration-300 w-20 h-20 sm:w-24 sm:h-24 mb-3`}
+                    size={24} 
+                    className={`transition-colors duration-300 w-6 h-6 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-1 md:mb-3`}
                     style={hexStyles ? { color: hexStyles.textColor } : undefined}
                   />
                 )}
                 
                 {/* Subcategory Name */}
-                <h3 className="text-sm sm:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
+                <h3 className="text-xs md:text-sm lg:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight px-1">
                   {subCategory.name}
                 </h3>
               </button>

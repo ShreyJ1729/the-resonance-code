@@ -17,14 +17,14 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
     onCategorySelect(category);
   };
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-4 md:py-8 flex flex-col">
+      <div className="max-w-4xl mx-auto flex flex-col h-full">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-light text-neutral-800 dark:text-neutral-200 mb-4">
+        <div className="text-center mb-4 md:mb-12 flex-shrink-0">
+          <h1 className="text-2xl md:text-4xl font-light text-neutral-800 dark:text-neutral-200 mb-2 md:mb-4">
             The Resonance Code
           </h1>
-          <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+          <p className="text-sm md:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto px-2">
             Inspired by The Body Code by Dr. Bradley Nelson. Use muscle testing
             to navigate through the categories and find the right tracks for
             your needs.
@@ -32,7 +32,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-1 md:grid md:sm:grid-cols-2 lg:grid-cols-3 grid-rows-3 md:grid-rows-none gap-3 md:gap-6 lg:gap-8 max-w-6xl mx-auto flex-1 md:flex-none">
           {categories.map((category) => {
             const IconComponent =
               iconMap[category.icon as keyof typeof iconMap];
@@ -42,17 +42,17 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
               <button
                 key={category.name}
                 onClick={() => handleCategoryClick(category)}
-                className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-full h-48 sm:h-56 lg:h-60 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-4`}
+                className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-full h-full md:h-48 lg:h-56 xl:h-60 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-2 md:p-4`}
               >
                 {IconComponent && (
                   <IconComponent
-                    size={80}
-                    className={`${colorClasses.text} transition-colors duration-300 sm:w-24 sm:h-24 mb-2`}
+                    size={40}
+                    className={`${colorClasses.text} transition-colors duration-300 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-1 md:mb-2`}
                   />
                 )}
 
                 {/* Category Name */}
-                <h3 className="text-sm sm:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
+                <h3 className="text-xs md:text-sm lg:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight px-1">
                   {category.name}
                 </h3>
               </button>
