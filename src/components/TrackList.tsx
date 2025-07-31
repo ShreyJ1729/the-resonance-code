@@ -29,7 +29,7 @@ export const TrackList: React.FC<TrackListProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 px-4 py-8">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-8">
       <div className="max-w-4xl mx-auto">
         {/* Header with Back Button */}
         <div className="flex items-center mb-8">
@@ -60,9 +60,14 @@ export const TrackList: React.FC<TrackListProps> = ({
               />
             )}
           </div>
-          <h1 className="text-2xl font-light text-neutral-800 mb-2">
+          <h1 className="text-2xl font-light text-neutral-800 dark:text-neutral-200 mb-2">
             {subCategory.name}
           </h1>
+          {category.name === "Binaural Beats" && (
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 italic">
+              Binaural beats require headphones to be effective
+            </p>
+          )}
         </div>
 
         {/* YouTube Player */}

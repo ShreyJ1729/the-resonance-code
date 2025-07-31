@@ -52,6 +52,11 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
           <h1 className="text-2xl font-light text-neutral-800 dark:text-neutral-200">
             {category.name}
           </h1>
+          {category.name === "Binaural Beats" && (
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-2 italic">
+              Binaural beats require headphones to be effective
+            </p>
+          )}
         </div>
 
         {/* Subcategory Grid */}
