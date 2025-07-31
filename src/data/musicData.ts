@@ -367,8 +367,8 @@ export const musicData: MusicData = {
         },
         {
           name: "Deep Healing",
-          icon: "heart-pulse",
-          color: "#2ECC71",
+          icon: "sparkle",
+          color: "#32CD32",
           tracks: createTracks(
             [
               "432 Miracle Sleep Tone",
@@ -409,8 +409,8 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Attract Positivity",
-          icon: "sparkles",
-          color: "#F39C12",
+          icon: "sparkle",
+          color: "#FFD700",
           tracks: createTracks(
             [
               "777 Manifest Positivity & Self-Confidence",
@@ -527,7 +527,7 @@ export const musicData: MusicData = {
       categories: [
         {
           name: "Meditation Music",
-          icon: "om",
+          icon: "eye",
           color: "#E74C3C",
           tracks: createTracks(
             [

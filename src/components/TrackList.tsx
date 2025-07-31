@@ -47,6 +47,9 @@ export const TrackList: React.FC<TrackListProps> = ({
   const isHexColor = subCategoryColor.startsWith('#');
   const colorClasses = isHexColor ? getColorClasses(category.color) : getColorClasses(subCategoryColor);
   const hexStyles = isHexColor ? getHexColorStyles(subCategoryColor) : null;
+  
+  // For background, use subcategory's own color classes if it's not hex, otherwise use hex styles
+  const bgColorClasses = subCategory.color && !isHexColor ? getColorClasses(subCategory.color) : colorClasses;
 
   // Extract YouTube video ID from URL
   const getYouTubeVideoId = (url: string): string | null => {
@@ -216,7 +219,12 @@ export const TrackList: React.FC<TrackListProps> = ({
 
         {/* Category Header */}
         <div className="text-center mb-12">
-          <div className={`w-16 h-16 mx-auto mb-4 rounded-full ${colorClasses.bgLight} flex items-center justify-center`}>
+          <div 
+            className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${
+              isHexColor ? '' : bgColorClasses.bgLight
+            }`}
+            style={hexStyles ? { backgroundColor: hexStyles.bgColorLight } : undefined}
+          >
             {IconComponent && (
               <IconComponent 
                 size={32} 

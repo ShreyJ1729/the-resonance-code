@@ -33,6 +33,7 @@ import {
   Repeat1,
   List,
   ListMusic,
+  Sparkle,
 } from "lucide-react";
 
 // Export icons individually
@@ -87,6 +88,7 @@ export const iconMap = {
   "repeat-1": Repeat1,
   list: List,
   "list-music": ListMusic,
+  sparkle: Sparkle,
 } as const;
 
 export type IconType = keyof typeof iconMap;
