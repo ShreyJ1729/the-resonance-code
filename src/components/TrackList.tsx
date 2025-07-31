@@ -11,6 +11,18 @@ declare global {
   }
 }
 
+// Wake Lock API types
+interface WakeLockSentinel {
+  released: boolean;
+  type: string;
+  release(): Promise<void>;
+  addEventListener(type: string, listener: EventListener): void;
+  removeEventListener(type: string, listener: EventListener): void;
+}
+
+// Wake Lock API - Using any to avoid conflicts with existing types
+declare const navigator: any;
+
 interface TrackListProps {
   category: MainCategory;
   subCategory: Category;
@@ -26,6 +38,9 @@ export const TrackList: React.FC<TrackListProps> = ({
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [loopMode, setLoopMode] = useState<'single' | 'playlist'>('playlist');
   const [player, setPlayer] = useState<any>(null);
+  const [userInteracted, setUserInteracted] = useState<boolean>(false);
+  const [wakeLock, setWakeLock] = useState<WakeLockSentinel | null>(null);
+  const [wakeLockSupported, setWakeLockSupported] = useState<boolean>(false);
   const playerRef = useRef<HTMLDivElement>(null);
   const IconComponent = iconMap[(subCategory.icon || category.icon) as keyof typeof iconMap];
   const colorClasses = getColorClasses(subCategory.color || category.color);
@@ -40,9 +55,11 @@ export const TrackList: React.FC<TrackListProps> = ({
     const wasSelected = selectedTrack?.url === track.url;
     if (wasSelected) {
       setSelectedTrack(null);
+      releaseWakeLock();
     } else {
       setSelectedTrack(track);
       setCurrentTrackIndex(index);
+      setUserInteracted(true); // Mark that user has interacted
     }
   };
 
@@ -58,8 +75,41 @@ export const TrackList: React.FC<TrackListProps> = ({
     setSelectedTrack(subCategory.tracks[prevIndex]);
   };
 
-  // Load YouTube IFrame Player API
+  // Wake lock functions
+  const requestWakeLock = async () => {
+    if (!wakeLockSupported || wakeLock) return;
+    
+    try {
+      const newWakeLock = await navigator.wakeLock!.request('screen');
+      setWakeLock(newWakeLock);
+      console.log('Wake lock acquired');
+      
+      newWakeLock.addEventListener('release', () => {
+        console.log('Wake lock released');
+        setWakeLock(null);
+      });
+    } catch (err) {
+      console.error('Failed to acquire wake lock:', err);
+    }
+  };
+
+  const releaseWakeLock = async () => {
+    if (wakeLock) {
+      try {
+        await wakeLock.release();
+        setWakeLock(null);
+      } catch (err) {
+        console.error('Failed to release wake lock:', err);
+      }
+    }
+  };
+
+  // Check wake lock support and load YouTube API
   useEffect(() => {
+    // Check wake lock support
+    setWakeLockSupported('wakeLock' in navigator);
+    
+    // Load YouTube IFrame Player API
     if (!window.YT) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
@@ -81,24 +131,45 @@ export const TrackList: React.FC<TrackListProps> = ({
           player.destroy();
         }
 
-        // Create new player
+        // Create new player with mobile-optimized settings
         const newPlayer = new window.YT.Player(playerRef.current, {
           videoId: videoId,
           width: '100%',
           height: '100%',
           playerVars: {
-            autoplay: 1,
+            autoplay: userInteracted ? 1 : 0, // Only autoplay after user interaction
+            playsinline: 1, // Critical for iOS Safari
             rel: 0,
             loop: loopMode === 'single' ? 1 : 0,
             playlist: loopMode === 'single' ? videoId : undefined,
+            controls: 1, // Show controls for mobile users
+            modestbranding: 1,
+            origin: window.location.origin, // Required for iframe API
           },
           events: {
+            onReady: (event: any) => {
+              console.log('YouTube player ready');
+              // If user has interacted and autoplay is 0, manually play
+              if (userInteracted && !playerRef.current?.querySelector('iframe')?.src.includes('autoplay=1')) {
+                event.target.playVideo();
+              }
+            },
             onStateChange: (event: any) => {
               // YouTube player states: -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (cued)
-              if (event.data === 0 && loopMode === 'playlist') { // Video ended
-                console.log('Video ended, advancing to next track');
-                handleNextTrack();
+              if (event.data === 1) { // Playing
+                requestWakeLock();
+              } else if (event.data === 2 || event.data === 0) { // Paused or ended
+                if (event.data === 0 && loopMode === 'playlist') {
+                  console.log('Video ended, advancing to next track');
+                  handleNextTrack();
+                } else if (event.data === 2) {
+                  releaseWakeLock();
+                }
               }
+            },
+            onError: (event: any) => {
+              console.error('YouTube player error:', event.data);
+              releaseWakeLock();
             },
           },
         });
@@ -108,12 +179,13 @@ export const TrackList: React.FC<TrackListProps> = ({
     }
   }, [selectedTrack, loopMode, handleNextTrack]);
 
-  // Cleanup player on unmount
+  // Cleanup player and wake lock on unmount
   useEffect(() => {
     return () => {
       if (player) {
         player.destroy();
       }
+      releaseWakeLock();
     };
   }, [player]);
 
@@ -173,6 +245,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                   </p>
                   <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
                     Track {currentTrackIndex + 1} of {subCategory.tracks.length} • {loopMode === 'single' ? 'Single track loop' : 'Auto-playlist enabled'}
+                    {wakeLock && ' • Screen stay awake'}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
