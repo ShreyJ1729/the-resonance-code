@@ -187,9 +187,19 @@ export const TrackList: React.FC<TrackListProps> = ({
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                       {loopMode === 'single' ? (
-                        <path d="M2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm6-2v4l4-2-4-2zm6-1h2v2h-2V9zm0 4h2v2h-2v-2z" />
+                        // Single track repeat icon
+                        <g>
+                          <path d="M7 7l3-3 3 3M10 4v9" />
+                          <path d="M13 15l-3 3-3-3" />
+                          <path d="M4 12A8 8 0 1 0 4 8" stroke="currentColor" strokeWidth="2" fill="none" />
+                          <text x="10" y="11" fontSize="6" textAnchor="middle" fill="currentColor" fontWeight="bold">1</text>
+                        </g>
                       ) : (
-                        <path d="M2 2h16v2H2V2zm0 6h16v2H2V8zm0 6h16v2H2v-2z" />
+                        // Playlist/shuffle icon  
+                        <g>
+                          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="2" />
+                          <path d="M16 3l2 2-2 2M16 13l2 2-2 2" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                        </g>
                       )}
                     </svg>
                   </button>
