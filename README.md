@@ -1,69 +1,44 @@
-# React + TypeScript + Vite
+# The Resonance Code
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sacred space for exploring healing sound frequencies and binaural beats. Experience the transformative power of ancient sound wisdom through modern technology.
 
-Currently, two official plugins are available:
+## What It Is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The Resonance Code is a web application that provides easy access to various healing frequencies:
 
-## Expanding the ESLint configuration
+- **Solfeggio Frequencies** - Ancient tones for healing and transformation
+- **Binaural Beats** - Brainwave entrainment for different mental states  
+- **432 Hz Collections** - Natural healing frequency music
+- **Special Frequencies** - Manifestation and abundance tones
+- **Wellness & Healing** - Anxiety relief and heart chakra healing
+- **Meditation & Mindfulness** - Guided frequency experiences
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 🎵 Hierarchical browsing through healing frequency categories
+- 🌙 Dark mode for meditative sessions
+- 📱 Responsive design for all devices
+- 🎬 Integrated YouTube playback
+- 🧭 Intuitive breadcrumb navigation
+- ⚡ Fast, modern React interface
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Technology
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Built with React 19, TypeScript, TailwindCSS, and Vite for a fast, modern experience.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+*Enter a sacred space of healing through the ancient wisdom of sound frequencies.*
