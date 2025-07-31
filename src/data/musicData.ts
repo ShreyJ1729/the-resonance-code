@@ -14,7 +14,7 @@ export const musicData: MusicData = {
     {
       name: "Solfeggio Frequencies",
       icon: "wave",
-      color: "primary-500",
+      color: "golden",
       categories: [
         {
           name: "Pain Reduction",
@@ -173,7 +173,7 @@ export const musicData: MusicData = {
     {
       name: "Binaural Beats",
       icon: "headphones",
-      color: "secondary-500",
+      color: "ocean",
       categories: [
         {
           name: "Sleep (Delta Waves)",
@@ -304,7 +304,7 @@ export const musicData: MusicData = {
     {
       name: "432 Collections",
       icon: "music",
-      color: "coral-500",
+      color: "amber",
       categories: [
         {
           name: "Deep Sleep",
@@ -336,7 +336,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Deep Healing"
+          name: "Deep Healing",
           tracks: createTracks(
             [
               "432 Miracle Sleep Tone",
@@ -373,7 +373,7 @@ export const musicData: MusicData = {
     {
       name: "Special Frequencies",
       icon: "sparkles",
-      color: "primary-600",
+      color: "purple",
       categories: [
         {
           name: "Attract Positivity",
@@ -418,7 +418,7 @@ export const musicData: MusicData = {
     {
       name: "Wellness & Healing",
       icon: "heart-pulse",
-      color: "secondary-600",
+      color: "green",
       categories: [
         {
           name: "Anxiety Relief",
@@ -454,7 +454,7 @@ export const musicData: MusicData = {
     {
       name: "Meditation & Mindfulness",
       icon: "brain",
-      color: "coral-600",
+      color: "indigo",
       categories: [
         {
           name: "Meditation Music",
@@ -466,7 +466,7 @@ export const musicData: MusicData = {
               "528 Manifest Your Greatness",
               "528 Whole Body Regeneration",
               "528 Emotional Healing",
-              "528 Raise Positive Vibrations"
+              "528 Raise Positive Vibrations",
               "528 Manifest Love",
               "528 Dreamscape for Positive Transformation",
               "528 Meditation Music",
@@ -493,7 +493,7 @@ export const musicData: MusicData = {
               "417 Remove Negative Energy",
               "417 Let Go of Mental Blockages",
               "417 Cleanse Trauma",
-              "417 Undo Damage"
+              "417 Undo Damage",
               "417 Sacral Chakra",
               "417 Positive Change",
               "417 Transmutation",
@@ -521,7 +521,7 @@ export const musicData: MusicData = {
               "639 Manifest Love & Miracles",
               "639 Heart Chakra",
               "639 Healing Relationships",
-              "639 Love Frequency"
+              "639 Love Frequency",
               "639 Attract Love",
               "639 Heart Frequency",
               "639 Pure Positive Energy",

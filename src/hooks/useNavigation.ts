@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavigationState, NavigationLevel, MainCategory, Category } from '../types';
+import type { NavigationState, MainCategory, Category } from '../types';
 
 export const useNavigation = () => {
   const [navigationState, setNavigationState] = useState<NavigationState>({

@@ -6,7 +6,14 @@ export default {
   ],
   darkMode: 'class',
   safelist: [
-    // Ensure all dynamic color classes are included in build
+    // Therapeutic color system
+    'bg-yellow-500', 'bg-yellow-50', 'bg-yellow-100', 'text-yellow-600', 'border-yellow-300', 'ring-yellow-200',
+    'bg-blue-500', 'bg-blue-50', 'bg-blue-100', 'text-blue-600', 'border-blue-300', 'ring-blue-200',
+    'bg-amber-500', 'bg-amber-50', 'bg-amber-100', 'text-amber-600', 'border-amber-300', 'ring-amber-200',
+    'bg-purple-500', 'bg-purple-50', 'bg-purple-100', 'text-purple-600', 'border-purple-300', 'ring-purple-200',
+    'bg-emerald-500', 'bg-emerald-50', 'bg-emerald-100', 'text-emerald-600', 'border-emerald-300', 'ring-emerald-200',
+    'bg-indigo-500', 'bg-indigo-50', 'bg-indigo-100', 'text-indigo-600', 'border-indigo-300', 'ring-indigo-200',
+    // Legacy colors
     'bg-primary-500', 'bg-primary-500/10', 'bg-primary-500/20', 'text-primary-500', 'border-primary-500/30', 'ring-primary-500/20',
     'bg-primary-600', 'bg-primary-600/10', 'bg-primary-600/20', 'text-primary-600', 'border-primary-600/30', 'ring-primary-600/20',
     'bg-secondary-500', 'bg-secondary-500/10', 'bg-secondary-500/20', 'text-secondary-500', 'border-secondary-500/30', 'ring-secondary-500/20',

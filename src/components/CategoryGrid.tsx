@@ -30,7 +30,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6 justify-items-center max-w-6xl mx-auto">
           {categories.map((category) => {
             const IconComponent = iconMap[category.icon as keyof typeof iconMap];
             const colorClasses = getColorClasses(category.color);
@@ -39,17 +39,17 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
               <button
                 key={category.name}
                 onClick={() => handleCategoryClick(category)}
-                className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-32 h-32 sm:w-36 sm:h-36 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-2`}
+                className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-40 h-40 sm:w-48 sm:h-48 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-3`}
               >
                 {IconComponent && (
                   <IconComponent 
-                    size={64} 
-                    className={`${colorClasses.text} transition-colors duration-300 sm:w-20 sm:h-20 mb-1`}
+                    size={80} 
+                    className={`${colorClasses.text} transition-colors duration-300 sm:w-24 sm:h-24 mb-2`}
                   />
                 )}
                 
                 {/* Category Name */}
-                <h3 className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
+                <h3 className="text-sm sm:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
                   {category.name}
                 </h3>
               </button>

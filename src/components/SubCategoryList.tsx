@@ -55,22 +55,22 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
         </div>
 
         {/* Subcategory Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 justify-items-center max-w-6xl mx-auto">
           {category.categories.map((subCategory, index) => (
             <button
               key={`${subCategory.name}-${index}`}
               onClick={() => onSubCategorySelect(subCategory)}
-              className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-24 h-24 sm:w-28 sm:h-28 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-2`}
+              className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-32 h-32 sm:w-36 sm:h-36 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-3`}
             >
               {IconComponent && (
                 <IconComponent 
-                  size={48} 
-                  className={`${colorClasses.text} transition-colors duration-300 sm:w-16 sm:h-16 mb-1`}
+                  size={64} 
+                  className={`${colorClasses.text} transition-colors duration-300 w-16 h-16 sm:w-20 sm:h-20 mb-2`}
                 />
               )}
               
               {/* Subcategory Name */}
-              <h3 className="text-xs font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
+              <h3 className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
                 {subCategory.name}
               </h3>
             </button>

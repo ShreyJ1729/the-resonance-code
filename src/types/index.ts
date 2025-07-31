@@ -1,3 +1,4 @@
+// Core data interfaces
 export interface Track {
   title: string;
   url: string;
@@ -19,6 +20,7 @@ export interface MusicData {
   categories: MainCategory[];
 }
 
+// Navigation interfaces
 export type NavigationLevel = 'main' | 'category' | 'tracks';
 
 export interface NavigationState {

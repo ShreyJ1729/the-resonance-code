@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   body {
@@ -16,15 +16,15 @@
   .card {
     @apply bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-in-out;
   }
-  
+
   .category-button {
     @apply w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer transform hover:scale-105 transition-all duration-300;
   }
-  
+
   .category-icon {
     @apply w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-lg;
   }
-  
+
   .category-title {
     @apply text-lg font-medium text-neutral-700 text-center leading-tight;
   }
