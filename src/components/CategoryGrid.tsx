@@ -22,10 +22,10 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-light text-neutral-800 dark:text-neutral-200 mb-4">
-            Resonance Music Therapy
+            The Resonance Code
           </h1>
           <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-            Explore healing frequencies and binaural beats designed to support your wellness journey
+            Discover healing frequencies to support your Body Code practice. Use muscle testing to find the right frequencies for your healing journey.
           </p>
         </div>
 

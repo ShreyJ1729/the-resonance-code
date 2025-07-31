@@ -17,6 +17,7 @@ export const TrackList: React.FC<TrackListProps> = ({
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(false);
+  const [loopMode, setLoopMode] = useState<'single' | 'playlist'>('playlist');
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const IconComponent = iconMap[category.icon as keyof typeof iconMap];
   const colorClasses = getColorClasses(category.color);
@@ -29,7 +30,7 @@ export const TrackList: React.FC<TrackListProps> = ({
 
   // Auto-play functionality
   useEffect(() => {
-    if (isAutoPlaying && selectedTrack) {
+    if (isAutoPlaying && selectedTrack && loopMode === 'playlist') {
       const videoId = getYouTubeVideoId(selectedTrack.url);
       if (videoId && iframeRef.current) {
         // YouTube embedded player will auto-advance, but we need to handle the next track
@@ -44,7 +45,7 @@ export const TrackList: React.FC<TrackListProps> = ({
         return () => clearTimeout(timer);
       }
     }
-  }, [selectedTrack, currentTrackIndex, isAutoPlaying, subCategory.tracks]);
+  }, [selectedTrack, currentTrackIndex, isAutoPlaying, loopMode, subCategory.tracks]);
 
   const handleTrackSelect = (track: Track, index: number) => {
     const wasSelected = selectedTrack?.url === track.url;
@@ -125,14 +126,32 @@ export const TrackList: React.FC<TrackListProps> = ({
                     {selectedTrack.title}
                   </p>
                   <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
-                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • Auto-loop enabled
+                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • {loopMode === 'single' ? 'Single track loop' : 'Playlist loop'}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
                   <button
+                    onClick={() => setLoopMode(loopMode === 'single' ? 'playlist' : 'single')}
+                    className={`p-2 rounded transition-colors ${
+                      loopMode === 'single' 
+                        ? `${colorClasses.bgLight} ${colorClasses.text}` 
+                        : 'text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
+                    }`}
+                    title={loopMode === 'single' ? 'Switch to playlist loop' : 'Switch to single track loop'}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                      {loopMode === 'single' ? (
+                        <path d="M2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm6-2v4l4-2-4-2zm6-1h2v2h-2V9zm0 4h2v2h-2v-2z" />
+                      ) : (
+                        <path d="M2 2h16v2H2V2zm0 6h16v2H2V8zm0 6h16v2H2v-2z" />
+                      )}
+                    </svg>
+                  </button>
+                  <button
                     onClick={handlePrevTrack}
                     className="p-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
                     title="Previous Track"
+                    disabled={loopMode === 'single'}
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M15 4l-8 6 8 6V4zM6 4h2v12H6V4z" />
@@ -142,6 +161,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                     onClick={handleNextTrack}
                     className="p-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors"
                     title="Next Track"
+                    disabled={loopMode === 'single'}
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M5 4v12l8-6-8-6zM12 4h2v12h-2V4z" />
@@ -154,7 +174,7 @@ export const TrackList: React.FC<TrackListProps> = ({
               {getYouTubeVideoId(selectedTrack.url) ? (
                 <iframe
                   ref={iframeRef}
-                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(selectedTrack.url)}?autoplay=1&rel=0&loop=1&playlist=${getYouTubeVideoId(selectedTrack.url)}`}
+                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(selectedTrack.url)}?autoplay=1&rel=0${loopMode === 'single' ? `&loop=1&playlist=${getYouTubeVideoId(selectedTrack.url)}` : ''}`}
                   title={selectedTrack.title}
                   className="w-full h-full"
                   frameBorder="0"
