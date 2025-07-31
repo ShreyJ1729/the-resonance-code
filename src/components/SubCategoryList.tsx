@@ -1,7 +1,7 @@
 import React from 'react';
 import type { MainCategory, Category } from '../types';
 import { iconMap } from './icons';
-import { getColorClasses } from '../utils/colorMapping';
+import { getColorClasses, getHexColorStyles } from '../utils/colorMapping';
 
 interface SubCategoryListProps {
   category: MainCategory;
@@ -60,26 +60,43 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
         </div>
 
         {/* Subcategory Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 justify-items-center max-w-6xl mx-auto">
-          {category.categories.map((subCategory, index) => (
-            <button
-              key={`${subCategory.name}-${index}`}
-              onClick={() => onSubCategorySelect(subCategory)}
-              className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-32 h-32 sm:w-36 sm:h-36 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring} p-3`}
-            >
-              {IconComponent && (
-                <IconComponent 
-                  size={64} 
-                  className={`${colorClasses.text} transition-colors duration-300 w-16 h-16 sm:w-20 sm:h-20 mb-2`}
-                />
-              )}
-              
-              {/* Subcategory Name */}
-              <h3 className="text-xs sm:text-sm font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
-                {subCategory.name}
-              </h3>
-            </button>
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
+          {category.categories.map((subCategory, index) => {
+            // Use subcategory's own icon and color if available, otherwise fall back to main category
+            const subCategoryIcon = subCategory.icon || category.icon;
+            const subCategoryColor = subCategory.color || category.color;
+            const SubCategoryIconComponent = iconMap[subCategoryIcon as keyof typeof iconMap];
+            
+            // Check if subcategory color is a hex color
+            const isHexColor = subCategoryColor.startsWith('#');
+            const subColorClasses = isHexColor ? getColorClasses(category.color) : getColorClasses(subCategoryColor);
+            const hexStyles = isHexColor ? getHexColorStyles(subCategoryColor) : null;
+            
+            return (
+              <button
+                key={`${subCategory.name}-${index}`}
+                onClick={() => onSubCategorySelect(subCategory)}
+                className={`group relative bg-white dark:bg-neutral-800 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 w-full h-40 sm:h-44 lg:h-48 flex flex-col items-center justify-center border border-neutral-100 dark:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${subColorClasses.border} ${subColorClasses.ring} p-4`}
+                style={hexStyles ? {
+                  '--hover-bg': hexStyles.bgColorLight,
+                  '--ring-color': hexStyles.ringColor,
+                } as React.CSSProperties : undefined}
+              >
+                {SubCategoryIconComponent && (
+                  <SubCategoryIconComponent 
+                    size={80} 
+                    className={`transition-colors duration-300 w-20 h-20 sm:w-24 sm:h-24 mb-3`}
+                    style={hexStyles ? { color: hexStyles.textColor } : undefined}
+                  />
+                )}
+                
+                {/* Subcategory Name */}
+                <h3 className="text-sm sm:text-base font-medium text-neutral-800 dark:text-neutral-200 text-center leading-tight">
+                  {subCategory.name}
+                </h3>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

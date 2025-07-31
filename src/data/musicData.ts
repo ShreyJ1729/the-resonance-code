@@ -17,7 +17,7 @@ export const musicData: MusicData = {
       color: "golden",
       categories: [
         {
-          name: "Pain Reduction",
+          name: "174 Hz - Pain Reduction",
           icon: "shield",
           color: "#E74C3C",
           tracks: createTracks(
@@ -38,7 +38,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Liberating Guilt and Fear",
+          name: "396 Hz - Liberating Guilt and Fear",
           icon: "unlock",
           color: "#9B59B6",
           tracks: createTracks(
@@ -59,7 +59,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Undoing Situations and Facilitating Change",
+          name: "417 Hz - Undoing Situations and Facilitating Change",
           icon: "refresh-cw",
           color: "#F39C12",
           tracks: createTracks(
@@ -80,7 +80,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Transformation and Miracles (DNA Repair)",
+          name: "528 Hz - Transformation and Miracles (DNA Repair)",
           icon: "dna",
           color: "#27AE60",
           tracks: createTracks(
@@ -101,7 +101,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Connecting Relationships",
+          name: "639 Hz - Connecting Relationships",
           icon: "heart",
           color: "#E91E63",
           tracks: createTracks(
@@ -122,7 +122,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Full Body Detox",
+          name: "741 Hz - Full Body Detox",
           icon: "droplets",
           color: "#3498DB",
           tracks: createTracks(
@@ -143,7 +143,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Returning to Spiritual Order",
+          name: "852 Hz - Returning to Spiritual Order",
           icon: "eye",
           color: "#6A5ACD",
           tracks: createTracks(
@@ -164,7 +164,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Returning to Oneness",
+          name: "963 Hz - Returning to Oneness",
           icon: "sun",
           color: "#FFD700",
           tracks: createTracks(
@@ -192,7 +192,7 @@ export const musicData: MusicData = {
       color: "ocean",
       categories: [
         {
-          name: "Sleep (Delta Waves)",
+          name: "0.5-4 Hz - Sleep (Delta Waves)",
           icon: "moon",
           color: "#2C3E50",
           tracks: createTracks(
@@ -213,7 +213,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Meditation (Theta Waves)",
+          name: "4-8 Hz - Meditation (Theta Waves)",
           icon: "lotus",
           color: "#8E44AD",
           tracks: createTracks(
@@ -234,7 +234,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Focus (Alpha Waves)",
+          name: "8-13 Hz - Focus (Alpha Waves)",
           icon: "target",
           color: "#E67E22",
           tracks: createTracks(
@@ -255,7 +255,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Concentration (Beta Waves)",
+          name: "13-30 Hz - Concentration (Beta Waves)",
           icon: "brain",
           color: "#34495E",
           tracks: createTracks(
@@ -276,7 +276,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Peak Awareness (Gamma Waves)",
+          name: "30-100 Hz - Peak Awareness (Gamma Waves)",
           icon: "zap",
           color: "#F1C40F",
           tracks: createTracks(
@@ -297,7 +297,7 @@ export const musicData: MusicData = {
           ),
         },
         {
-          name: "Focus Music",
+          name: "40 Hz - Focus Music",
           icon: "music",
           color: "#16A085",
           tracks: createTracks(
@@ -487,6 +487,37 @@ export const musicData: MusicData = {
             ]
           ),
         },
+        {
+          name: "Heart Chakra Healing",
+          icon: "heart",
+          color: "#E91E63",
+          tracks: createTracks(
+            [
+              "639 Manifest Love & Miracles",
+              "639 Heart Chakra",
+              "639 Healing Relationships",
+              "639 Love Frequency",
+              "639 Attract Love",
+              "639 Heart Frequency",
+              "639 Pure Positive Energy",
+              "639 Solfeggio Frequency",
+              "639 Find Love",
+              "639 Frequency",
+            ],
+            [
+              "https://www.youtube.com/watch?v=UG4U5OJ_rU8",
+              "https://www.youtube.com/watch?v=wnGT5rxDPso",
+              "https://www.youtube.com/watch?v=fuesG4cCPxM",
+              "https://www.youtube.com/watch?v=Y8Zh0hXCneg",
+              "https://www.youtube.com/watch?v=mwS4LP_HWT4",
+              "https://www.youtube.com/watch?v=JoD_TWApgLQ",
+              "https://www.youtube.com/watch?v=thyuxR4NBa0",
+              "https://www.youtube.com/watch?v=mRNPjsjBQDs",
+              "https://www.youtube.com/watch?v=CASfMW8zfvI",
+              "https://www.youtube.com/watch?v=-LOvUmYikgI",
+            ]
+          ),
+        },
       ],
     },
     {
@@ -553,37 +584,6 @@ export const musicData: MusicData = {
               "https://www.youtube.com/watch?v=55mYg1fCQi4",
               "https://www.youtube.com/watch?v=m71NKP8oxy0",
               "https://www.youtube.com/watch?v=1td4VrDgmRw",
-            ]
-          ),
-        },
-        {
-          name: "Heart Chakra Healing",
-          icon: "heart",
-          color: "#E91E63",
-          tracks: createTracks(
-            [
-              "639 Manifest Love & Miracles",
-              "639 Heart Chakra",
-              "639 Healing Relationships",
-              "639 Love Frequency",
-              "639 Attract Love",
-              "639 Heart Frequency",
-              "639 Pure Positive Energy",
-              "639 Solfeggio Frequency",
-              "639 Find Love",
-              "639 Frequency",
-            ],
-            [
-              "https://www.youtube.com/watch?v=UG4U5OJ_rU8",
-              "https://www.youtube.com/watch?v=wnGT5rxDPso",
-              "https://www.youtube.com/watch?v=fuesG4cCPxM",
-              "https://www.youtube.com/watch?v=Y8Zh0hXCneg",
-              "https://www.youtube.com/watch?v=mwS4LP_HWT4",
-              "https://www.youtube.com/watch?v=JoD_TWApgLQ",
-              "https://www.youtube.com/watch?v=thyuxR4NBa0",
-              "https://www.youtube.com/watch?v=mRNPjsjBQDs",
-              "https://www.youtube.com/watch?v=CASfMW8zfvI",
-              "https://www.youtube.com/watch?v=-LOvUmYikgI",
             ]
           ),
         },
