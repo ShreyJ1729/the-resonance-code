@@ -4,6 +4,18 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
+  safelist: [
+    // Ensure all dynamic color classes are included in build
+    'bg-primary-500', 'bg-primary-500/10', 'bg-primary-500/20', 'text-primary-500', 'border-primary-500/30', 'ring-primary-500/20',
+    'bg-primary-600', 'bg-primary-600/10', 'bg-primary-600/20', 'text-primary-600', 'border-primary-600/30', 'ring-primary-600/20',
+    'bg-secondary-500', 'bg-secondary-500/10', 'bg-secondary-500/20', 'text-secondary-500', 'border-secondary-500/30', 'ring-secondary-500/20',
+    'bg-secondary-600', 'bg-secondary-600/10', 'bg-secondary-600/20', 'text-secondary-600', 'border-secondary-600/30', 'ring-secondary-600/20',
+    'bg-coral-500', 'bg-coral-500/10', 'bg-coral-500/20', 'text-coral-500', 'border-coral-500/30', 'ring-coral-500/20',
+    'bg-coral-600', 'bg-coral-600/10', 'bg-coral-600/20', 'text-coral-600', 'border-coral-600/30', 'ring-coral-600/20',
+    // Translation classes for sliding navigation
+    '-translate-x-1/3', '-translate-x-2/3',
+  ],
   theme: {
     extend: {
       colors: {

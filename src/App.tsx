@@ -2,7 +2,9 @@ import { CategoryGrid } from "./components/CategoryGrid";
 import { SubCategoryList } from "./components/SubCategoryList";
 import { TrackList } from "./components/TrackList";
 import { Breadcrumb } from "./components/Breadcrumb";
+import { DarkModeToggle } from "./components/DarkModeToggle";
 import { useNavigation } from "./hooks/useNavigation";
+import { useDarkMode } from "./hooks/useDarkMode";
 import { musicData } from "./data/musicData";
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
     navigateBack,
     navigateToHome,
   } = useNavigation();
+
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   // Debug logging
   console.log('App render - Navigation State:', {
@@ -32,10 +36,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900">
+      {/* Dark Mode Toggle */}
+      <DarkModeToggle isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
+      
       {/* Breadcrumb Navigation */}
       {navigationState.level !== "main" && (
-        <div className="bg-white border-b border-neutral-200 px-4 py-2 sticky top-0 z-10">
+        <div className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 px-4 py-2 sticky top-0 z-10">
           <div className="max-w-4xl mx-auto">
             <Breadcrumb
               items={navigationState.breadcrumb}
