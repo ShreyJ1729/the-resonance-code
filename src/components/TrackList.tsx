@@ -185,23 +185,12 @@ export const TrackList: React.FC<TrackListProps> = ({
                     }`}
                     title={loopMode === 'single' ? 'Switch to auto-playlist mode' : 'Switch to single track loop'}
                   >
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                      {loopMode === 'single' ? (
-                        // Single track repeat icon
-                        <g>
-                          <path d="M7 7l3-3 3 3M10 4v9" />
-                          <path d="M13 15l-3 3-3-3" />
-                          <path d="M4 12A8 8 0 1 0 4 8" stroke="currentColor" strokeWidth="2" fill="none" />
-                          <text x="10" y="11" fontSize="6" textAnchor="middle" fill="currentColor" fontWeight="bold">1</text>
-                        </g>
-                      ) : (
-                        // Playlist/shuffle icon  
-                        <g>
-                          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="2" />
-                          <path d="M16 3l2 2-2 2M16 13l2 2-2 2" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                        </g>
-                      )}
-                    </svg>
+                    {(() => {
+                      const IconComponent = loopMode === 'single' 
+                        ? iconMap["repeat-1"]
+                        : iconMap["list-music"];
+                      return <IconComponent size={20} />;
+                    })()}
                   </button>
                   <button
                     onClick={handlePrevTrack}

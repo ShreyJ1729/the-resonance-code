@@ -29,6 +29,10 @@ import {
   Coins,
   ShieldCheck,
   Leaf,
+  Repeat,
+  Repeat1,
+  List,
+  ListMusic,
 } from "lucide-react";
 
 // Export icons individually
@@ -79,6 +83,10 @@ export const iconMap = {
   coins: Coins,
   "shield-check": ShieldCheck,
   leaf: Leaf,
+  repeat: Repeat,
+  "repeat-1": Repeat1,
+  list: List,
+  "list-music": ListMusic,
 } as const;
 
 export type IconType = keyof typeof iconMap;
