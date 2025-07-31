@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Category, Track, MainCategory } from '../types';
+import type { Category, Track, MainCategory } from '../types';
 import { iconMap } from './icons';
+import { getColorClasses } from '../utils/colorMapping';
 
 interface TrackListProps {
   category: MainCategory;
@@ -15,6 +16,7 @@ export const TrackList: React.FC<TrackListProps> = ({
 }) => {
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const IconComponent = iconMap[category.icon as keyof typeof iconMap];
+  const colorClasses = getColorClasses(category.color);
 
   // Extract YouTube video ID from URL
   const getYouTubeVideoId = (url: string): string | null => {
@@ -50,23 +52,17 @@ export const TrackList: React.FC<TrackListProps> = ({
 
         {/* Category Header */}
         <div className="text-center mb-12">
-          <div className={`
-            w-16 h-16 mx-auto mb-4 rounded-full bg-${category.color}/10 
-            flex items-center justify-center
-          `}>
+          <div className={`w-16 h-16 mx-auto mb-4 rounded-full ${colorClasses.bgLight} flex items-center justify-center`}>
             {IconComponent && (
               <IconComponent 
                 size={32} 
-                className={`text-${category.color}`}
+                className={colorClasses.text}
               />
             )}
           </div>
           <h1 className="text-2xl font-light text-neutral-800 mb-2">
             {subCategory.name}
           </h1>
-          <p className="text-neutral-600">
-            {subCategory.tracks.length} healing tracks available
-          </p>
         </div>
 
         {/* YouTube Player */}
@@ -108,27 +104,20 @@ export const TrackList: React.FC<TrackListProps> = ({
               <button
                 key={`${track.title}-${index}`}
                 onClick={() => handleTrackSelect(track)}
-                className={`
-                  w-full text-left bg-white rounded-xl transition-all duration-300
-                  p-3 sm:p-4 border focus:outline-none focus:ring-2 focus:ring-offset-2
-                  ${isSelected 
-                    ? `border-${category.color}/30 shadow-card-hover ring-2 ring-${category.color}/20` 
+                className={`w-full text-left bg-white rounded-xl transition-all duration-300 p-3 sm:p-4 border focus:outline-none focus:ring-2 focus:ring-offset-2 group ${
+                  isSelected 
+                    ? `${colorClasses.border} shadow-card-hover ring-2 ${colorClasses.ring}` 
                     : 'border-neutral-100 hover:border-neutral-200 shadow-card hover:shadow-card-hover'
-                  }
-                  group
-                `}
+                }`}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center flex-1 min-w-0">
                     {/* Play/Pause Icon */}
-                    <div className={`
-                      w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0
-                      transition-all duration-300
-                      ${isSelected 
-                        ? `bg-${category.color}/20 text-${category.color}` 
-                        : `bg-neutral-100 text-neutral-400 group-hover:bg-${category.color}/10 group-hover:text-${category.color}`
-                      }
-                    `}>
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mr-3 sm:mr-4 flex-shrink-0 transition-all duration-300 ${
+                      isSelected 
+                        ? `${colorClasses.bgHover} ${colorClasses.text}` 
+                        : `bg-neutral-100 text-neutral-400 group-hover:${colorClasses.bgLight} group-hover:${colorClasses.text}`
+                    }`}>
                       {isSelected ? (
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                           <rect x="3" y="2" width="3" height="12" rx="1" />
@@ -143,26 +132,20 @@ export const TrackList: React.FC<TrackListProps> = ({
 
                     {/* Track Info */}
                     <div className="flex-1 min-w-0">
-                      <h4 className={`
-                        text-sm sm:text-base font-medium truncate transition-colors
-                        ${isSelected ? `text-${category.color}` : 'text-neutral-800'}
-                      `}>
+                      <h4 className={`text-sm sm:text-base font-medium truncate transition-colors ${
+                        isSelected ? colorClasses.text : 'text-neutral-800'
+                      }`}>
                         {track.title}
                       </h4>
-                      <p className="text-xs sm:text-sm text-neutral-500 mt-1">
-                        Track {index + 1} of {subCategory.tracks.length}
-                      </p>
                     </div>
                   </div>
 
                   {/* Status Indicator */}
-                  <div className={`
-                    w-2 h-2 rounded-full transition-all duration-300
-                    ${isSelected 
-                      ? `bg-${category.color}` 
+                  <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    isSelected 
+                      ? colorClasses.bg 
                       : 'bg-neutral-300 group-hover:bg-neutral-400'
-                    }
-                  `} />
+                  }`} />
                 </div>
               </button>
             );

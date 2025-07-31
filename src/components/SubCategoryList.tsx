@@ -1,6 +1,7 @@
 import React from 'react';
-import { MainCategory, Category } from '../types';
+import type { MainCategory, Category } from '../types';
 import { iconMap } from './icons';
+import { getColorClasses } from '../utils/colorMapping';
 
 interface SubCategoryListProps {
   category: MainCategory;
@@ -14,119 +15,66 @@ export const SubCategoryList: React.FC<SubCategoryListProps> = ({
   onBack,
 }) => {
   const IconComponent = iconMap[category.icon as keyof typeof iconMap];
+  const colorClasses = getColorClasses(category.color);
 
   return (
-    <div className="min-h-screen bg-neutral-50 px-4 py-8">
+    <div className="min-h-screen bg-neutral-50 px-4 py-6">
       <div className="max-w-4xl mx-auto">
-        {/* Header with Back Button */}
-        <div className="flex items-center mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center text-neutral-600 hover:text-neutral-800 transition-colors mr-4"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path 
-                d="M12 4L6 10L12 16" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="ml-2 text-sm">Back</span>
-          </button>
-        </div>
-
-        {/* Category Header */}
-        <div className="text-center mb-12">
-          <div className={`
-            w-16 h-16 mx-auto mb-4 rounded-full bg-${category.color}/10 
-            flex items-center justify-center
-          `}>
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className={`w-12 h-12 mx-auto mb-3 rounded-full ${colorClasses.bgLight} flex items-center justify-center`}>
             {IconComponent && (
               <IconComponent 
-                size={32} 
-                className={`text-${category.color}`}
+                size={24} 
+                className={colorClasses.text}
               />
             )}
           </div>
-          <h1 className="text-3xl font-light text-neutral-800 mb-3">
+          <h1 className="text-2xl font-light text-neutral-800">
             {category.name}
           </h1>
-          <p className="text-neutral-600">
-            Choose a specific frequency or collection
-          </p>
         </div>
 
-        {/* Subcategory List */}
-        <div className="space-y-4">
+        {/* Subcategory Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
           {category.categories.map((subCategory, index) => (
             <button
               key={`${subCategory.name}-${index}`}
               onClick={() => onSubCategorySelect(subCategory)}
-              className={`
-                w-full text-left bg-white rounded-xl shadow-card hover:shadow-card-hover
-                transition-all duration-300 ease-out transform hover:-translate-y-0.5
-                p-4 sm:p-6 border border-neutral-100 hover:border-${category.color}/20
-                focus:outline-none focus:ring-2 focus:ring-${category.color}/50 focus:ring-offset-2
-                group
-              `}
+              className={`group relative bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 ease-out transform hover:-translate-y-1 p-6 sm:p-8 text-center min-h-[200px] sm:min-h-[240px] flex flex-col items-center justify-center border border-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:${colorClasses.border} ${colorClasses.ring}`}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h3 className="text-base sm:text-lg font-medium text-neutral-800 mb-1 sm:mb-2 pr-2">
-                    {subCategory.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-600">
-                    {subCategory.tracks.length} tracks available
-                  </p>
-                </div>
-                
-                {/* Arrow Icon */}
-                <div className={`
-                  w-8 h-8 rounded-full bg-${category.color}/10 
-                  flex items-center justify-center
-                  transition-all duration-300 transform group-hover:translate-x-1
-                  group-hover:bg-${category.color}/20
-                `}>
-                  <svg 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 16 16" 
-                    fill="none"
-                    className={`text-${category.color}`}
-                  >
-                    <path 
-                      d="M6 3L11 8L6 13" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
+              {/* Icon Container */}
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 rounded-full ${colorClasses.bgLight} flex items-center justify-center transition-all duration-300 group-hover:${colorClasses.bgHover} group-hover:scale-110`}>
+                {IconComponent && (
+                  <IconComponent 
+                    size={24} 
+                    className={`${colorClasses.text} transition-colors duration-300 sm:w-8 sm:h-8`}
+                  />
+                )}
               </div>
 
-              {/* Track Preview */}
-              <div className="mt-4 pt-4 border-t border-neutral-100">
-                <div className="flex flex-wrap gap-2">
-                  {subCategory.tracks.slice(0, 3).map((track, trackIndex) => (
-                    <span
-                      key={trackIndex}
-                      className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-full"
-                    >
-                      {track.title.length > 30 
-                        ? `${track.title.substring(0, 30)}...` 
-                        : track.title
-                      }
-                    </span>
-                  ))}
-                  {subCategory.tracks.length > 3 && (
-                    <span className="px-2 py-1 bg-neutral-200 text-neutral-500 text-xs rounded-full">
-                      +{subCategory.tracks.length - 3} more
-                    </span>
-                  )}
-                </div>
+              {/* Subcategory Name */}
+              <h3 className="text-base sm:text-lg font-medium text-neutral-800 leading-tight px-2">
+                {subCategory.name}
+              </h3>
+
+              {/* Hover Arrow */}
+              <div className={`absolute top-4 right-4 w-6 h-6 rounded-full ${colorClasses.bgLight} flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0`}>
+                <svg 
+                  width="12" 
+                  height="12" 
+                  viewBox="0 0 12 12" 
+                  fill="none"
+                  className={colorClasses.text}
+                >
+                  <path 
+                    d="M4 2L8 6L4 10" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </div>
             </button>
           ))}

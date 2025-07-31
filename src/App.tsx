@@ -1,10 +1,9 @@
-import React from 'react';
-import { CategoryGrid } from './components/CategoryGrid';
-import { SubCategoryList } from './components/SubCategoryList';
-import { TrackList } from './components/TrackList';
-import { Breadcrumb } from './components/Breadcrumb';
-import { useNavigation } from './hooks/useNavigation';
-import { musicData } from './data/musicData';
+import { CategoryGrid } from "./components/CategoryGrid";
+import { SubCategoryList } from "./components/SubCategoryList";
+import { TrackList } from "./components/TrackList";
+import { Breadcrumb } from "./components/Breadcrumb";
+import { useNavigation } from "./hooks/useNavigation";
+import { musicData } from "./data/musicData";
 
 function App() {
   const {
@@ -15,10 +14,19 @@ function App() {
     navigateToHome,
   } = useNavigation();
 
+  // Debug logging
+  console.log('App render - Navigation State:', {
+    level: navigationState.level,
+    hasCurrentCategory: !!navigationState.currentCategory,
+    currentCategoryName: navigationState.currentCategory?.name,
+    hasCurrentSubCategory: !!navigationState.currentSubCategory,
+    breadcrumb: navigationState.breadcrumb,
+  });
+
   const handleBreadcrumbNavigate = (index: number) => {
     if (index === 0) {
       navigateToHome();
-    } else if (index === 1 && navigationState.level === 'tracks') {
+    } else if (index === 1 && navigationState.level === "tracks") {
       navigateBack();
     }
   };
@@ -26,11 +34,11 @@ function App() {
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Breadcrumb Navigation */}
-      {navigationState.level !== 'main' && (
-        <div className="bg-white border-b border-neutral-200 px-4 py-3 sticky top-0 z-10">
+      {navigationState.level !== "main" && (
+        <div className="bg-white border-b border-neutral-200 px-4 py-2 sticky top-0 z-10">
           <div className="max-w-4xl mx-auto">
-            <Breadcrumb 
-              items={navigationState.breadcrumb} 
+            <Breadcrumb
+              items={navigationState.breadcrumb}
               onNavigate={handleBreadcrumbNavigate}
             />
           </div>
@@ -39,14 +47,14 @@ function App() {
 
       {/* Main Content with Sliding Animation */}
       <div className="relative overflow-hidden">
-        <div 
+        <div
           className={`
             transition-transform duration-500 ease-out flex
-            ${navigationState.level === 'main' ? 'translate-x-0' : ''}
-            ${navigationState.level === 'category' ? '-translate-x-full' : ''}
-            ${navigationState.level === 'tracks' ? '-translate-x-[200%]' : ''}
+            ${navigationState.level === "main" ? "translate-x-0" : ""}
+            ${navigationState.level === "category" ? "-translate-x-1/3" : ""}
+            ${navigationState.level === "tracks" ? "-translate-x-2/3" : ""}
           `}
-          style={{ width: '300%' }}
+          style={{ width: "300%" }}
         >
           {/* Main Categories View */}
           <div className="w-1/3 flex-shrink-0">
@@ -69,13 +77,14 @@ function App() {
 
           {/* Tracks View */}
           <div className="w-1/3 flex-shrink-0">
-            {navigationState.currentCategory && navigationState.currentSubCategory && (
-              <TrackList
-                category={navigationState.currentCategory}
-                subCategory={navigationState.currentSubCategory}
-                onBack={navigateBack}
-              />
-            )}
+            {navigationState.currentCategory &&
+              navigationState.currentSubCategory && (
+                <TrackList
+                  category={navigationState.currentCategory}
+                  subCategory={navigationState.currentSubCategory}
+                  onBack={navigateBack}
+                />
+              )}
           </div>
         </div>
       </div>
