@@ -1,7 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import type { Category, Track, MainCategory } from '../types';
 import { iconMap } from './icons';
 import { getColorClasses } from '../utils/colorMapping';
+
+// YouTube API types
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
 
 interface TrackListProps {
   category: MainCategory;
@@ -17,7 +25,8 @@ export const TrackList: React.FC<TrackListProps> = ({
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [loopMode, setLoopMode] = useState<'single' | 'playlist'>('playlist');
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [player, setPlayer] = useState<any>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
   const IconComponent = iconMap[(subCategory.icon || category.icon) as keyof typeof iconMap];
   const colorClasses = getColorClasses(subCategory.color || category.color);
 
@@ -26,9 +35,6 @@ export const TrackList: React.FC<TrackListProps> = ({
     const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
     return match ? match[1] : null;
   };
-
-  // Note: Removed automatic track advancement to prevent premature switching
-  // Users can manually navigate with previous/next buttons for better control
 
   const handleTrackSelect = (track: Track, index: number) => {
     const wasSelected = selectedTrack?.url === track.url;
@@ -40,17 +46,76 @@ export const TrackList: React.FC<TrackListProps> = ({
     }
   };
 
-  const handleNextTrack = () => {
+  const handleNextTrack = useCallback(() => {
     const nextIndex = (currentTrackIndex + 1) % subCategory.tracks.length;
     setCurrentTrackIndex(nextIndex);
     setSelectedTrack(subCategory.tracks[nextIndex]);
-  };
+  }, [currentTrackIndex, subCategory.tracks]);
 
   const handlePrevTrack = () => {
     const prevIndex = currentTrackIndex === 0 ? subCategory.tracks.length - 1 : currentTrackIndex - 1;
     setCurrentTrackIndex(prevIndex);
     setSelectedTrack(subCategory.tracks[prevIndex]);
   };
+
+  // Load YouTube IFrame Player API
+  useEffect(() => {
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+      
+      window.onYouTubeIframeAPIReady = () => {
+        console.log('YouTube API loaded');
+      };
+    }
+  }, []);
+
+  // Initialize YouTube player when track is selected
+  useEffect(() => {
+    if (selectedTrack && playerRef.current && window.YT) {
+      const videoId = getYouTubeVideoId(selectedTrack.url);
+      if (videoId) {
+        // Destroy existing player
+        if (player) {
+          player.destroy();
+        }
+
+        // Create new player
+        const newPlayer = new window.YT.Player(playerRef.current, {
+          videoId: videoId,
+          width: '100%',
+          height: '100%',
+          playerVars: {
+            autoplay: 1,
+            rel: 0,
+            loop: loopMode === 'single' ? 1 : 0,
+            playlist: loopMode === 'single' ? videoId : undefined,
+          },
+          events: {
+            onStateChange: (event: any) => {
+              // YouTube player states: -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (cued)
+              if (event.data === 0 && loopMode === 'playlist') { // Video ended
+                console.log('Video ended, advancing to next track');
+                handleNextTrack();
+              }
+            },
+          },
+        });
+
+        setPlayer(newPlayer);
+      }
+    }
+  }, [selectedTrack, loopMode, handleNextTrack]);
+
+  // Cleanup player on unmount
+  useEffect(() => {
+    return () => {
+      if (player) {
+        player.destroy();
+      }
+    };
+  }, [player]);
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 px-4 py-8">
@@ -107,7 +172,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                     {selectedTrack.title}
                   </p>
                   <p className="text-sm text-neutral-500 dark:text-neutral-500 mt-1">
-                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • {loopMode === 'single' ? 'Single track loop' : 'Manual playlist control'}
+                    Track {currentTrackIndex + 1} of {subCategory.tracks.length} • {loopMode === 'single' ? 'Single track loop' : 'Auto-playlist enabled'}
                   </p>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -118,7 +183,7 @@ export const TrackList: React.FC<TrackListProps> = ({
                         ? `${colorClasses.bgLight} ${colorClasses.text}` 
                         : 'text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
                     }`}
-                    title={loopMode === 'single' ? 'Switch to manual playlist mode' : 'Switch to single track loop'}
+                    title={loopMode === 'single' ? 'Switch to auto-playlist mode' : 'Switch to single track loop'}
                   >
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                       {loopMode === 'single' ? (
@@ -153,14 +218,9 @@ export const TrackList: React.FC<TrackListProps> = ({
             </div>
             <div className="aspect-video">
               {getYouTubeVideoId(selectedTrack.url) ? (
-                <iframe
-                  ref={iframeRef}
-                  src={`https://www.youtube.com/embed/${getYouTubeVideoId(selectedTrack.url)}?autoplay=1&rel=0${loopMode === 'single' ? `&loop=1&playlist=${getYouTubeVideoId(selectedTrack.url)}` : ''}`}
-                  title={selectedTrack.title}
+                <div
+                  ref={playerRef}
                   className="w-full h-full"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-neutral-100 dark:bg-neutral-700">
